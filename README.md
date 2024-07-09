@@ -28,7 +28,7 @@ Asegúrate de tener instalado lo siguiente antes de ejecutar el microservicio:
 1. Clona este repositorio:
 
     ```bash
-    git clone https://github.com/jessy-aguilera/prueba-java-bci
+    git clone https://github.com/jessy-aguilera/java-bci-ntt
     cd prueba-java-bci
     ```
 
@@ -99,15 +99,15 @@ Ejemplo de respuesta:
 ## Documentación
 ### Contrato Swagger
 En el contrato Swagger puedes encontrar los endpoint definidos y las operaciones disponibles en este microservicio. 
-- Puedes encontrar el contrato Swagger [aquí](https://github.com/jessy-aguilera/prueba-java-bci/blob/main/docs/swagger.yml) 
+- Puedes encontrar el contrato Swagger [aquí](https://github.com/jessy-aguilera/java-bci-ntt/blob/master/docs/swagger.yml) 
 
 ### Diagrama de Componentes
 El diagrama de componentes proporciona una visión general de la arquitectura del microservicio y sus componentes. 
-- Puedes encontrar el diagrama [aquí](https://github.com/jessy-aguilera/prueba-java-bci/blob/main/docs/diagrama-componentes.png)
+- Puedes encontrar el diagrama [aquí](https://github.com/jessy-aguilera/java-bci-ntt/blob/master/docs/diagrama-componentes.png)
 
 ### Diagrama de Secuencias
 El diagrama de secuencias ilustra la interacción entre los diferentes componentes durante un proceso específico.
-- Puedes encontrar el diagrama de secuencias de registro de usuario [aquí](https://github.com/jessy-aguilera/prueba-java-bci/blob/main/docs/diagrama-secuencia-registro.png)
+- Puedes encontrar el diagrama de secuencias de registro de usuario [aquí](https://github.com/jessy-aguilera/java-bci-ntt/blob/master/docs/diagrama-secuencia-registro.png)
 
 ## Ejecutar Pruebas
 Para ejecutar las pruebas, utiliza el siguiente comando:
