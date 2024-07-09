@@ -28,7 +28,7 @@ Asegúrate de tener instalado lo siguiente antes de ejecutar el microservicio:
 1. Clona este repositorio:
 
     ```bash
-    git clone https://github.com/jessy-aguilera/java-bci-ntt
+    git clone https://github.com/jessy-aguilera/java-bci-ntt.git
     cd prueba-java-bci
     ```
 
