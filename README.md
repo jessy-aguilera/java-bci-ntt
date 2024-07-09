@@ -66,8 +66,8 @@ curl --location 'localhost:8080/sign-up' \
     "password": "a2asfGfdfdf4",
     "phones": [
         {
-            "number": 20570717,
-            "citycode": 9,
+            "number": "20570717",
+            "citycode": "9",
             "countrycode": "+56"
         }
     ]
