@@ -20,6 +20,7 @@ public class User {
     @GenericGenerator(name = "uuid-hibernate-generator", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
     private Date created;
+    private Date modified;
     private Date lastLogin;
     private String token;
     private Boolean isActive;

@@ -17,8 +17,8 @@ public class Phone {
     @GeneratedValue(generator = "uuid-hibernate-generator")
     @GenericGenerator(name = "uuid-hibernate-generator", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
-    private Long number;
-    private int citycode;
+    private String number;
+    private String citycode;
     private String countrycode;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id")

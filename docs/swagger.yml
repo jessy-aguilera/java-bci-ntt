@@ -1,0 +1,131 @@
+openapi: 3.0.3
+info:
+  title: User registration BCI
+  description: Microservicio para creación de usuarios
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Implicit Url
+
+tags:
+  - name: Login
+    description: servicios para la creación de usuarios
+
+paths:
+  /sign-up:
+    post:
+      tags:
+        - Login
+      summary: postSignUp
+      description: Servicio para registrar un usuario
+      operationId: postSignUp
+      security: []
+      requestBody: 
+        description: Valores obligatorios marcados
+        required: true
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/UserRequestDTO'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+
+components:
+  schemas:
+    ErrorDTO:
+      type: object
+      properties:
+        mensaje:
+          type: string
+          format: 'Descripción del error'
+    UserRequestDTO:
+      type: object
+      required: [email, password]
+      properties:
+        name:
+          type: string
+          description: 'Nombre del usuario'
+          example: 'Jessy Aguilera'
+        email:
+          type: string
+          description: 'Email del usuario'
+          example: 'jessy.aguilera.lopez@gmail.com'
+        password:
+          type: string
+          description: 'Contraseña del usuario'
+          example: 'a2asfGfdfdf4'
+        phones:
+          type: array
+          description: 'Lista de telefonos'
+          items:
+            $ref: "#/components/schemas/PhoneDTO"
+    PhoneDTO:
+      type: object
+      properties:
+        number:
+          type: string
+          description: 'Numero de teléfono'
+          example: '20570717'
+        citycode:
+          type: string
+          description: 'Código de ciudad'
+          example: '9'
+        countrycode:
+          type: string
+          description: 'Codigo de pais'
+          example: '56'
+    UserResponseDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          description: 'Identificador'
+          example: 'e5c6cf84-8860-4c00-91cd-22d3be28904e'
+        created:
+          type: string
+          description: 'Fecha de creación'
+          example: 'Nov 16, 2021 12:51:43 PM'
+        modified:
+          type: string
+          description: 'Fecha de modificación'
+          example: 'Nov 16, 2021 12:51:43 PM'
+        lastLogin:
+          type: string
+          description: 'Fecha de último login'
+          example: 'Nov 16, 2021 12:51:43 PM'
+        token:
+          type: string
+          description: 'Token de login'
+          example: 'eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqamFsMTMwMUBnbWFpbC5jb20iLCJleHAiOjE3MDE3MDM5NzB9.qCujxE3v0kkD7g2vdCYQLoND0RjAl_t6sJqgPqQAyNp2s5R-Qb33-leWc11fP-gm'
+        isActive:
+          type: boolean
+          description: 'Estado del usuario'
+          example: true
+        name:
+          type: string
+          description: 'Nombre del usuario'
+          example: 'Jessy Aguilera'
+        email:
+          type: string
+          description: 'Email del usuario'
+          example: 'jessy.aguilera.lopez@gmail.com'
+        password:
+          type: string
+          description: 'Contraseña del usuario'
+          example: 'a2asfGfdfdf4'
+        phones:
+          type: array
+          description: 'Lista de telefonos'
+          items:
+            $ref: "#/components/schemas/PhoneDTO"

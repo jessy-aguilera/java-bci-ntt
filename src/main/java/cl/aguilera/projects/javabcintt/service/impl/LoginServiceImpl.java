@@ -43,6 +43,7 @@ public class LoginServiceImpl implements LoginService {
 
         User userEntity = modelMapper.map(user, User.class);
         userEntity.setCreated(new Date());
+        userEntity.setModified(new Date());
         userEntity.setLastLogin(new Date());
         userEntity.setToken(jwtUtil.generateToken(userEntity));
         userEntity.setIsActive(true);

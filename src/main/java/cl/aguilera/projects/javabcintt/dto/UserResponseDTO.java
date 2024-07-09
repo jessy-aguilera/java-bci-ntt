@@ -16,6 +16,8 @@ public class UserResponseDTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MMM dd, yyyy hh:mm:ss a")
     private Date created;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MMM dd, yyyy hh:mm:ss a")
+    private Date modified;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MMM dd, yyyy hh:mm:ss a")
     private Date lastLogin;
     private String token;
     private Boolean isActive;

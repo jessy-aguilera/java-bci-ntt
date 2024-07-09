@@ -11,9 +11,9 @@ import java.util.List;
 @NoArgsConstructor
 public class UserRequestDTO {
     private String name;
-    @Email(message = "email debe contener un formato valido")
+    @Email(message = "Email debe contener un formato valido")
     private String email;
-    @Password(message = "password debe contener un formato valido")
+    @Password(message = "Password debe contener un formato valido")
     private String password;
     private List<PhoneDTO> phones;
 }

@@ -4,10 +4,11 @@ import cl.aguilera.projects.javabcintt.dto.ErrorDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -15,9 +16,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<ErrorDTO> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex, WebRequest request) {
         ErrorDTO errorDTO = new ErrorDTO();
+        AtomicReference<String> errores = new AtomicReference<>("");
         ex.getBindingResult().getAllErrors().forEach(error -> {
-            errorDTO.setMensaje(error.getDefaultMessage());
+            errores.set(errores.get() + error.getDefaultMessage() + ". ");
         });
+        errorDTO.setMensaje(errores.get());
 
         return new ResponseEntity<>(errorDTO, HttpStatus.BAD_REQUEST);
     }
@@ -28,14 +31,6 @@ public class GlobalExceptionHandler {
         errorDTO.setMensaje(ex.getMessage());
 
         return new ResponseEntity<>(errorDTO, HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(MissingRequestHeaderException.class)
-    public ResponseEntity<ErrorDTO> handleMissingRequestHeaderException(Exception ex, WebRequest request) {
-        ErrorDTO errorDTO = new ErrorDTO();
-        errorDTO.setMensaje("Debe enviar un token de usuario valido");
-
-        return new ResponseEntity<>(errorDTO, HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(PasswordEncryptionException.class)
