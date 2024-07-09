@@ -50,6 +50,7 @@ class LoginControllerTest {
         userResponseDTO = new UserResponseDTO();
         userResponseDTO.setId("e1f136f0-b92d-4564-bd9d-25f12299a92e");
         userResponseDTO.setCreated(new Date());
+        userResponseDTO.setModified(new Date());
         userResponseDTO.setLastLogin(new Date());
         userResponseDTO.setToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhc2RzZEBnbWFpbC5jb20iLCJleHAiOjE3MDE2MjkzNjJ9.k3JGost_2g6endbaV2C1F-k8QDLWdher5ZSf1eKbErE");
         userResponseDTO.setIsActive(Boolean.TRUE);

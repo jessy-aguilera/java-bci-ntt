@@ -1,6 +1,7 @@
 package cl.aguilera.projects.javabcintt.exception;
 
 import cl.aguilera.projects.javabcintt.dto.ErrorDTO;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -39,6 +40,14 @@ public class GlobalExceptionHandler {
         errorDTO.setMensaje(ex.getMessage());
 
         return new ResponseEntity<>(errorDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ErrorDTO> handleDataIntegrityViolationException(Exception ex, WebRequest request) {
+        ErrorDTO errorDTO = new ErrorDTO();
+        errorDTO.setMensaje("El correo ya está registrado");
+
+        return new ResponseEntity<>(errorDTO, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)

@@ -17,6 +17,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,12 +33,6 @@ class LoginServiceImplTest {
 
     @Mock
     private UserRepository userRepository;
-
-    @Mock
-    private JwtUtil jwtUtil;
-
-    @Mock
-    private PasswordEncryption passwordEncryption;
 
     @Mock
     private ModelMapper modelMapper;
@@ -76,6 +71,7 @@ class LoginServiceImplTest {
         user = new User();
         user.setId("e1f136f0-b92d-4564-bd9d-25f12299a92e");
         user.setCreated(new Date());
+        user.setModified(new Date());
         user.setLastLogin(new Date());
         user.setToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhc2RzZEBnbWFpbC5jb20iLCJleHAiOjE3MDE2MjkzNjJ9.k3JGost_2g6endbaV2C1F-k8QDLWdher5ZSf1eKbErE");
         user.setIsActive(Boolean.TRUE);
@@ -85,8 +81,8 @@ class LoginServiceImplTest {
 
         phone = new Phone();
         phone.setId("e1f");
-        phone.setNumber(1234567890L);
-        phone.setCitycode(9);
+        phone.setNumber("1234567890");
+        phone.setCitycode("9");
         phone.setCountrycode("+56");
         phone.setUser(user);
 
@@ -106,8 +102,6 @@ class LoginServiceImplTest {
     void signUpOK() throws Exception {
         when(userRepository.findByEmail(any())).thenReturn(Optional.empty());
         when(modelMapper.map(eq(userRequestDTO), eq(User.class))).thenReturn(user);
-        when(jwtUtil.generateToken(eq(user))).thenReturn("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhc2RzZEBnbWFpbC5jb20iLCJleHAiOjE3MDE2MjkzMzB9.7GK2dEw-f3o8r-crNt8bsRLjnyI2cKyNxcl6tvRDiUg");
-        when(passwordEncryption.encrypt(any())).thenReturn("a2asfGfdfdf4");
         when(userRepository.save(any())).thenReturn(user);
         when(modelMapper.map(eq(user), eq(UserResponseDTO.class))).thenReturn(userResponseDTO);
         when(modelMapper.map(eq(phoneDTO), eq(Phone.class))).thenReturn(phone);
@@ -130,7 +124,6 @@ class LoginServiceImplTest {
         userResponseDTO.setName(null);
         when(userRepository.findByEmail(any())).thenReturn(Optional.empty());
         when(modelMapper.map(eq(userRequestDTO), eq(User.class))).thenReturn(user);
-        when(passwordEncryption.encrypt(any())).thenReturn("a2asfGfdfdf4");
         when(userRepository.save(any())).thenReturn(user);
         when(modelMapper.map(eq(user), eq(UserResponseDTO.class))).thenReturn(userResponseDTO);
 
@@ -148,7 +141,6 @@ class LoginServiceImplTest {
         userResponseDTO.setPhones(new ArrayList<>());
         when(userRepository.findByEmail(any())).thenReturn(Optional.empty());
         when(modelMapper.map(eq(userRequestDTO), eq(User.class))).thenReturn(user);
-        when(passwordEncryption.encrypt(any())).thenReturn("a2asfGfdfdf4");
         when(userRepository.save(any())).thenReturn(user);
         when(modelMapper.map(eq(user), eq(UserResponseDTO.class))).thenReturn(userResponseDTO);
 
@@ -160,10 +152,11 @@ class LoginServiceImplTest {
     }
 
     @Test
-    void signUpUserExists() throws Exception {
-        when(userRepository.findByEmail(any())).thenReturn(Optional.of(user));
+    void signUpUserExists() {
+        when(modelMapper.map(eq(userRequestDTO), eq(User.class))).thenReturn(user);
+        when(userRepository.save(any())).thenThrow(new DataIntegrityViolationException("El correo ya está registrado"));
 
-        UserException exception = assertThrows(UserException.class, () -> loginService.signUp(userRequestDTO));
+        Exception exception = assertThrows(DataIntegrityViolationException.class, () -> loginService.signUp(userRequestDTO));
         assertEquals(exception.getMessage(), "El correo ya está registrado");
     }
 }
